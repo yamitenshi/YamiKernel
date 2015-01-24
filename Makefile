@@ -1,6 +1,13 @@
+CC=gcc
+CC_FLAGS=-m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Werror -Wextra
+ASM=nasm
+ASM_FLAGS=-f elf32
+LD=ld
+LD_FLAGS=-T src/link.ld -melf_i386
+
 kernel:
-	nasm -f elf32 src/boot.s -o bin/boot.o
-	ld -T src/link.ld -melf_i386 bin/boot.o -o bin/kernel.bin
+	${ASM} ${ASM_FLAGS} src/boot.s -o bin/boot.o
+	${LD} ${LD_FLAGS} bin/boot.o -o bin/kernel.bin
 
 clean:
 	@rm -f bin/*.o
