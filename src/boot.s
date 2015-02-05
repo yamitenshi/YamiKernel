@@ -1,6 +1,7 @@
 ; YamiKernel boot assembly file
 
 global loader                   ; The entry symbol for ELF
+extern kmain			; The main entry point for the kernel in C
 
 MAGIC        equ 0x1BADB002     ; The magic number required for multiboot
 FLAGS        equ 0x0            ; Multiboot flags
@@ -23,4 +24,5 @@ loader:                         ; The loader label (defined as entry point)
     mov esp, kernel_stack + KERNEL_STACK_SIZE
 
 .loop:
+    call kmain			; Call kmain() from kmain.c
     jmp .loop                   ; Loop forever
