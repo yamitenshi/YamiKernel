@@ -24,10 +24,20 @@ void setCursorPos(position pos) {
     fb_move_cursor((cursor_pos.y*FB_WIDTH)+cursor_pos.x);
 }
 
-void write(char *buf, unsigned int len, unsigned char fg, unsigned char bg) {
-    color col = { .fg = fg, .bg = bg };
+void clearScreen(color col) {
+    for(unsigned short x = 0; x < FB_WIDTH; x++) {
+        for(unsigned short y = 0; y < FB_HEIGHT; y++) {
+            position pos = { .x = x, .y = y };
+            putCharAtPos(' ', pos, col);
+        }
+    }
+    setCursorPos((position) { .x = 0, .y = 0 });
+}
 
-    for(unsigned int i = 0; i < len; i++) {
+void write(char *buf, color col) {
+    unsigned short i = 0;
+
+    while(buf[i] != '\0') {
         if(buf[i] != '\n') {
             putCharAtPos(buf[i], cursor_pos, col);
             cursor_pos.x++;
@@ -43,7 +53,9 @@ void write(char *buf, unsigned int len, unsigned char fg, unsigned char bg) {
         if(cursor_pos.y >= FB_HEIGHT) {
             cursor_pos.y = 0;
         }
+        i++;
     }
+
     setCursorPos(cursor_pos);
 }
 

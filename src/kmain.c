@@ -2,9 +2,8 @@
 #include "inc/colors.h"
 
 void kmain() {
-	char clear_screen[80*25] = {0};
-	write(clear_screen, 80*25, FB_LGREY, FB_BLACK);
+	clearScreen((color){ .fg = FB_WHITE, .bg = FB_BLUE });
 
-	write("Booting YamiKernel...\n", 22, FB_LGREY, FB_BLACK);
+	write("ERROR 0x1D107\n\nCould not find resource \"Intelligence\"\nSystem will now halt. Drink more coffee and try again.", (color){ .fg = FB_WHITE, .bg = FB_BLUE });
 	return;
 }
