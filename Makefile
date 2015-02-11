@@ -1,4 +1,4 @@
-OBJECTS=boot.o kmain.o
+OBJECTS=boot.o kmain.o io.o
 CC=gcc
 CC_FLAGS=-c -m32 -std=c11 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Werror -Wextra
 ASM=nasm

@@ -17,6 +17,7 @@ void kmain() {
 		fb_write_cell(2 * i, message[i], FB_LGREY, FB_BLACK);
 		i++;
 	}
+	fb_move_cursor(i);
 
 	return;
 }
