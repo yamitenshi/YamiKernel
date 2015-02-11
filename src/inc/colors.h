@@ -18,4 +18,9 @@
 #define FB_LBROWN   14
 #define FB_WHITE    15
 
+typedef struct {
+    unsigned short fg;
+    unsigned short bg;
+} __attribute__((packed)) color;
+
 #endif
