@@ -1,23 +1,10 @@
+#include "inc/driver.h"
 #include "inc/colors.h"
-#include "inc/framebuffer.h"
 
 void kmain() {
-	const char *message = "Hello Kernel!";
-	unsigned short i = 0;
+	char clear_screen[80*25] = {0};
+	write(clear_screen, 80*25, FB_LGREY, FB_BLACK);
 
-	// Essentially clear the screen
-	for(unsigned short x = 0; x < FB_WIDTH; x++) {
-		for(unsigned short y = 0; y < FB_HEIGHT; y++) {
-			unsigned int index = y*FB_WIDTH + x;
-			fb_write_cell(index * 2, ' ', FB_LGREY, FB_BLACK);
-		}
-	}
-
-	while(message[i] != '\0') {
-		fb_write_cell(2 * i, message[i], FB_LGREY, FB_BLACK);
-		i++;
-	}
-	fb_move_cursor(i);
-
+	write("Booting YamiKernel...\n", 22, FB_LGREY, FB_BLACK);
 	return;
 }
