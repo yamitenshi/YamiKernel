@@ -22,7 +22,7 @@ align 4                         ; Code must be 4 byte aligned
 
 loader:                         ; The loader label (defined as entry point)
     mov esp, kernel_stack + KERNEL_STACK_SIZE
+    call kmain			; Call kmain() from kmain.c
 
 .loop:
-    call kmain			; Call kmain() from kmain.c
     jmp .loop                   ; Loop forever
