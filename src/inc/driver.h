@@ -18,11 +18,29 @@ void putCharAtPos(char c, position pos, color col) {
     fb_write_cell(2*position, c, col.fg, col.bg);
 }
 
+void copyCharToPos(position orig, position dest) {
+    unsigned int pos_orig = (FB_WIDTH*orig.y) + orig.x;
+    unsigned int pos_dest = (FB_WIDTH*dest.y) + dest.x;
+
+    fb[pos_dest] = fb[pos_orig];
+    fb[pos_dest+1] = fb[pos_orig+1];
+}
+
 void setCursorPos(position pos) {
     cursor_pos.x = pos.x;
     cursor_pos.y = pos.y;
 
     fb_move_cursor((cursor_pos.y*FB_WIDTH)+cursor_pos.x);
+}
+
+void scrollFramebuffer() {
+    for(int y = 1; y < FB_HEIGHT; y++) {
+        for(int x = 0; x < FB_WIDTH; x++) {
+            position pos_orig = { .x = x, .y = y };
+            position pos_dest = { .x = x, .y = y-1 };
+            copyCharToPos(pos_orig, pos_dest);
+        }
+    }
 }
 
 void clearScreen(color col) {
@@ -51,8 +69,9 @@ void write(char *buf, color col) {
             cursor_pos.x = 0;
         }
 
-        if(cursor_pos.y >= FB_HEIGHT) {
-            cursor_pos.y = 0;
+        while(cursor_pos.y >= FB_HEIGHT) {
+            scrollFramebuffer();
+            cursor_pos.y = FB_HEIGHT - 1;
         }
         i++;
     }
