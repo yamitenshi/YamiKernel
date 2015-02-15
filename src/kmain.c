@@ -2,9 +2,8 @@
 #include "inc/colors.h"
 
 void kmain() {
-	clearScreen((color){ .fg = FB_WHITE, .bg = FB_BLUE });
+	clearScreen((color){ .fg = FB_LGREY, .bg = FB_BLACK });
 
-	write("ERROR 0x1D107\n\nCould not find resource \"Intelligence\"\nSystem will now halt. Drink more coffee and try again.", (color){ .fg = FB_WHITE, .bg = FB_BLUE });
-	serial_write("Kernel Panic: User is an idiot");
+	write("Scrolling terminal test...\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLower end of screen....\n\n\n\n\n\nThis should be scrolled now", (color){ .fg = FB_LGREY, .bg = FB_BLACK});
 	return;
 }
