@@ -3,6 +3,7 @@
 
 #include "io.h"
 #include "framebuffer.h"
+#include "serial.h"
 #include "colors.h"
 
 typedef struct {
@@ -57,6 +58,28 @@ void write(char *buf, color col) {
     }
 
     setCursorPos(cursor_pos);
+}
+
+void serial_write(char *buf) {
+    static int serial_configured = 0;
+
+    if(!serial_configured) {
+        serial_configure_baud_rate(SERIAL_COM1_BASE, 2);
+        serial_configure_line(SERIAL_COM1_BASE);
+        serial_configure_fifo_queue(SERIAL_COM1_BASE);
+        serial_configure_modem(SERIAL_COM1_BASE);
+        serial_configured = 1;
+    }
+
+    while(!serial_is_transmit_fifo_empty(SERIAL_COM1_BASE)) {
+        ;
+    }
+
+    unsigned int i = 0;
+    while(buf[i] != '\0') {
+        serial_write_cell(SERIAL_COM1_BASE, buf[i]);
+        i++;
+    }
 }
 
 #endif
